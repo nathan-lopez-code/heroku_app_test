@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from datetime import date
 from .models import Me
+from .forms import ContactMe
 
 
 def index(request):
@@ -14,8 +15,27 @@ def index(request):
 
 
 def contact(request):
+
+    name = None
     me = Me.objects.get(pk=1)
-    me = {
+
+    if request.method == 'POST':
+        form = ContactMe(request.POST)
+        if form.is_valid():
+            name = request.POST['name']
+
+            return render(request, template_name="portfolio/contact.html", context=me)
+
+
+    else:
+        form = ContactMe()
+    
+
+
+   
+    context = {
         'me' : me,
+        'form' : form,
     }
-    return render(request, template_name="portfolio/contact.html", context=me)
+
+    return render(request, template_name="portfolio/contact.html", context=context)
