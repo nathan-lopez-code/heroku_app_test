@@ -34,8 +34,8 @@ def contact(request):
             # sending email
 
             send_mail(
-                f"message from : {name}, subject : {subject}",
-                message + email,
+                f"subject : {subject}",
+                f"message\n \n from : {email}\nmame: {name}",
                 email,
                 [recipe]
             )
